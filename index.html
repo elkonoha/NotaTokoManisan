@@ -1,88 +1,244 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nota Toko Naila — Aplikasi Nota Belanja & Struk WhatsApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#059669">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Nota Naila">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Nota Toko Naila — Aplikasi Kasir Digital & Struk WhatsApp</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link id="pwaManifestLink" rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;Nota Toko Naila&quot;,&quot;short_name&quot;:&quot;Nota Naila&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#0b1120&quot;,&quot;theme_color&quot;:&quot;#059669&quot;}">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a;
-      color: #f8fafc;
+    :root {
+      --bg-primary: #0b1120;
+      --bg-card: rgba(15, 23, 42, 0.88);
+      --bg-input: rgba(30, 41, 59, 0.75);
+      --border-subtle: rgba(51, 65, 85, 0.65);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
     }
+
+    body.theme-light {
+      --bg-primary: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-input: #f8fafc;
+      --border-subtle: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.10) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+      color: var(--text-main);
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
     .font-mono-receipt {
       font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
       font-variant-numeric: tabular-nums;
     }
+
+    /* Digital LCD / LED Display Effect */
+    .digital-lcd {
+      background: linear-gradient(145deg, #06141f 0%, #091e26 100%);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.65), 0 4px 20px -2px rgba(16, 185, 129, 0.12);
+    }
+
+    /* Soft Glass Card */
+    .app-card {
+      background-color: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+    }
+
+    body.theme-light .app-card {
+      box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.06);
+    }
+
+    body.theme-light .bg-slate-900,
+    body.theme-light .bg-slate-900\/95 {
+      background-color: rgba(255, 255, 255, 0.95) !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    body.theme-light .bg-slate-800,
+    body.theme-light .bg-slate-800\/90,
+    body.theme-light .bg-slate-800\/80,
+    body.theme-light .bg-slate-800\/70,
+    body.theme-light .bg-slate-800\/60 {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+
+    body.theme-light .text-white {
+      color: #0f172a !important;
+    }
+
+    body.theme-light .text-slate-200,
+    body.theme-light .text-slate-300 {
+      color: #334155 !important;
+    }
+
+    body.theme-light .text-slate-400 {
+      color: #64748b !important;
+    }
+
+    body.theme-light .border-slate-800,
+    body.theme-light .border-slate-700,
+    body.theme-light .border-slate-700\/80 {
+      border-color: #e2e8f0 !important;
+    }
+
+    body.theme-light .keep-white-text,
+    body.theme-light .keep-white-text * {
+      color: #ffffff !important;
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #1e293b;
+      background: #0f172a;
     }
     ::-webkit-scrollbar-thumb {
-      background: #475569;
-      border-radius: 3px;
+      background: #334155;
+      border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #64748b;
+      background: #475569;
     }
+
     .receipt-zig-zag {
-      background-image: linear-gradient(135deg, #0f172a 25%, transparent 25%),
-                        linear-gradient(225deg, #0f172a 25%, transparent 25%);
+      background-image: linear-gradient(135deg, #e2e8f0 25%, transparent 25%),
+                        linear-gradient(225deg, #e2e8f0 25%, transparent 25%);
       background-position: 0 0;
-      background-size: 16px 16px;
-      height: 8px;
+      background-size: 14px 14px;
+      height: 7px;
       width: 100%;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+<body class="min-h-screen flex flex-col pb-20 lg:pb-6 selection:bg-emerald-500 selection:text-white">
 
   <!-- Toast Notification -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toastContainer" class="fixed bottom-20 lg:bottom-6 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-xs sm:max-w-sm"></div>
 
   <!-- Top Navbar -->
-  <header class="sticky top-0 z-30 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 py-3">
+  <header class="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-3 sm:px-5 py-3 shadow-sm">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-500/25 ring-1 ring-white/15 keep-white-text">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-lg font-bold tracking-tight text-white">Nota Toko Naila</h1>
-            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">WA & POS</span>
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">Nota Toko Naila</h1>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">PRO DIGITAL</span>
           </div>
-          <p class="text-xs text-slate-400">Generator Nota Kolom Monospace Sejajar & Struk Digital Modern</p>
+          <p class="text-[11px] sm:text-xs text-slate-400">Kasir Digital Nyaman Dipandang & Struk WhatsApp Otomatis</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <button id="btnNavPos" type="button" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-emerald-600 text-white shadow-sm">
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <!-- Theme Comfort Toggle -->
+        <button id="btnToggleTheme" type="button" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all flex items-center gap-1.5" title="Ganti Mode Layar Nyaman">
+          <span id="themeIcon">🌙</span>
+          <span id="themeLabel" class="hidden sm:inline">Mode Nyaman</span>
+        </button>
+
+        <!-- Download / Install to HP Button -->
+        <button id="btnOpenInstallModal" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-md shadow-sky-500/20 transition-all flex items-center gap-1.5 keep-white-text">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+          <span>Download di HP</span>
+        </button>
+
+        <button id="btnNavPos" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-600 text-white shadow-sm keep-white-text">
           Buat Nota
         </button>
-        <button id="btnNavHistory" type="button" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5">
+        <button id="btnNavHistory" type="button" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 border border-slate-700">
           <span>Riwayat Nota</span>
-          <span id="historyBadge" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-700 text-emerald-400">0</span>
+          <span id="historyBadge" class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">0</span>
         </button>
-        <button id="btnLoadSample" type="button" class="px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors" title="Muat contoh barang sesuai gambar">
-          Reset Contoh Gambar
+        <button id="btnLoadSample" type="button" class="px-2.5 py-2 rounded-xl text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors" title="Muat contoh barang sesuai gambar">
+          Reset Contoh
         </button>
       </div>
     </div>
   </header>
 
   <!-- Main Workspace -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-5 py-5">
+
+    <!-- DIGITAL REGISTER LED DISPLAY BANNER (Eye-friendly Quick Summary) -->
+    <div class="digital-lcd rounded-2xl p-4 sm:p-5 mb-6 text-white keep-white-text">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-5 flex flex-col justify-between">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[11px] font-mono-receipt uppercase tracking-widest text-emerald-300/90">LAYAR KASIR DIGITAL • TOKO NAILA</span>
+          </div>
+          <div class="mt-1 flex items-baseline gap-2">
+            <span class="text-xs text-slate-400 font-mono-receipt">TOTAL TAGIHAN:</span>
+          </div>
+          <div id="topDigitalGrandTotal" class="text-2xl sm:text-4xl font-extrabold font-mono-receipt text-emerald-400 tracking-tight mt-0.5">
+            Rp1.757.000
+          </div>
+          <div class="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-slate-300 font-mono-receipt">
+            <span>Barang: <strong id="topItemCount" class="text-white">8</strong> brg</span>
+            <span>•</span>
+            <span>No: <strong id="invoiceNoDisplay" class="text-emerald-300">#INV-20261031</strong></span>
+          </div>
+        </div>
+
+        <!-- Quick Cash & Change Calculator (Hitung Kembalian Cepat) -->
+        <div class="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-2.5 bg-slate-950/60 p-3 rounded-xl border border-emerald-500/20">
+          <div>
+            <label for="cashReceivedInput" class="block text-[10px] font-mono-receipt uppercase tracking-wider text-emerald-300/80 mb-1">Uang Diterima (Rp)</label>
+            <input id="cashReceivedInput" type="number" step="1000" min="0" placeholder="Cth: 1800000" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-2.5 py-1.5 text-sm font-mono-receipt text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+            <div class="flex flex-wrap gap-1 mt-1.5">
+              <button type="button" data-quick-cash="exact" class="quick-cash-btn text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 font-mono-receipt">Uang Pas</button>
+              <button type="button" data-quick-cash="50000" class="quick-cash-btn text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-mono-receipt">+50rb</button>
+              <button type="button" data-quick-cash="100000" class="quick-cash-btn text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-mono-receipt">+100rb</button>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-center px-2 py-1 rounded-lg bg-slate-900/50 border border-slate-800/80">
+            <span class="text-[10px] font-mono-receipt uppercase tracking-wider text-slate-400">Subtotal Nota</span>
+            <span id="topDigitalSubtotal" class="text-sm sm:text-base font-bold font-mono-receipt text-slate-200 mt-0.5">Rp1.757.000</span>
+            <span id="topDigitalAdjustments" class="text-[10px] font-mono-receipt text-slate-400 mt-0.5">Diskon Rp0 • Ongkir Rp0</span>
+          </div>
+
+          <div class="flex flex-col justify-center px-2.5 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/25">
+            <span id="changeLabel" class="text-[10px] font-mono-receipt uppercase tracking-wider text-emerald-300">Kembalian / Sisa</span>
+            <span id="changeAmountDisplay" class="text-base sm:text-lg font-extrabold font-mono-receipt text-emerald-400 mt-0.5">Rp0</span>
+            <span id="changeStatusHint" class="text-[10px] text-emerald-200/70">Masukkan uang tunai pembeli</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- VIEW 1: POS & RECEIPT BUILDER -->
     <div id="viewPos" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -90,53 +246,55 @@
       <!-- Left Column: Input Form & Items Table (7 cols) -->
       <div class="lg:col-span-7 flex flex-col gap-5">
 
-        <!-- Store & Customer Info Accordion / Card -->
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
+        <!-- Store & Customer Info Card -->
+        <section class="app-card bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
           <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">1. Informasi Toko & Pelanggan</h2>
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></span>
+              <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">1. Informasi Toko & Pelanggan</h2>
             </div>
-            <span id="invoiceNoDisplay" class="text-xs font-mono-receipt text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">#INV-20261031</span>
+            <button id="btnNewInvoiceNo" type="button" class="text-[11px] font-mono-receipt text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 transition-colors" title="Buat Nomor Nota Baru">
+              🔄 Nomor Baru
+            </button>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label for="storeName" class="block text-xs font-medium text-slate-400 mb-1">Nama Toko / Usaha</label>
-              <input id="storeName" type="text" value="TOKO GROSIR NAILA" placeholder="Contoh: Toko Naila" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+              <label for="storeName" class="block text-xs font-semibold text-slate-400 mb-1">Nama Toko / Usaha</label>
+              <input id="storeName" type="text" value="TOKO GROSIR NAILA" placeholder="Contoh: Toko Naila" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30">
             </div>
             <div>
-              <label for="storeContact" class="block text-xs font-medium text-slate-400 mb-1">Alamat / Info Singkat Toko</label>
-              <input id="storeContact" type="text" value="Durian Luncuk Simpang Masjid " placeholder="Alamat atau No. HP Toko" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+              <label for="storeContact" class="block text-xs font-semibold text-slate-400 mb-1">Alamat / Info Singkat Toko</label>
+              <input id="storeContact" type="text" value="Durian Luncuk Simpang Masjid" placeholder="Alamat atau No. HP Toko" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30">
             </div>
             <div>
-              <label for="customerName" class="block text-xs font-medium text-slate-400 mb-1">Nama Pelanggan (Opsional)</label>
-              <input id="customerName" type="text" value="" placeholder="Nama pembeli / pelanggan" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+              <label for="customerName" class="block text-xs font-semibold text-slate-400 mb-1">Nama Pelanggan (Opsional)</label>
+              <input id="customerName" type="text" value="" placeholder="Cth: Warung Bu Siti / Umum" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30">
             </div>
             <div>
-              <label for="customerWa" class="block text-xs font-medium text-slate-400 mb-1">No. WhatsApp Tujuan (Opsional)</label>
+              <label for="customerWa" class="block text-xs font-semibold text-slate-400 mb-1">No. WhatsApp Tujuan (Opsional)</label>
               <div class="relative">
-                <input id="customerWa" type="tel" value="" placeholder="Contoh: 081234567890" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl pl-3.5 pr-20 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
-                <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-medium text-slate-400 bg-slate-700/70 px-1.5 py-0.5 rounded">Auto +62</span>
+                <input id="customerWa" type="tel" value="" placeholder="Contoh: 081234567890" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl pl-3.5 pr-20 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30">
+                <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded">Auto +62</span>
               </div>
             </div>
           </div>
         </section>
 
         <!-- Add Item Form -->
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
+        <section class="app-card bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">2. Tambah Barang Belanjaan</h2>
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></span>
+              <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">2. Tambah Barang Belanjaan</h2>
             </div>
 
             <!-- Price Input Mode Switcher -->
             <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700 text-xs">
-              <button id="modeTotalBtn" type="button" class="px-2.5 py-1 rounded-lg font-medium transition-all bg-emerald-600 text-white">
+              <button id="modeTotalBtn" type="button" class="px-2.5 py-1 rounded-lg font-semibold transition-all bg-emerald-600 text-white keep-white-text">
                 Input Subtotal Baris
               </button>
-              <button id="modeUnitBtn" type="button" class="px-2.5 py-1 rounded-lg font-medium transition-all text-slate-400 hover:text-white">
+              <button id="modeUnitBtn" type="button" class="px-2.5 py-1 rounded-lg font-semibold transition-all text-slate-400 hover:text-white">
                 Harga Satuan × Qty
               </button>
             </div>
@@ -144,17 +302,17 @@
 
           <form id="addItemForm" class="grid grid-cols-1 sm:grid-cols-12 gap-3">
             <div class="sm:col-span-5">
-              <label for="itemName" class="block text-xs font-medium text-slate-400 mb-1">Nama Barang <span class="text-slate-500">(Maks ~13 hrf agar lurus)</span></label>
+              <label for="itemName" class="block text-xs font-semibold text-slate-400 mb-1">Nama Barang <span class="text-slate-500 font-normal">(Maks ~13 hrf agar lurus)</span></label>
               <input id="itemName" type="text" required placeholder="Cth: Tp. Payung" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
             </div>
 
             <div class="sm:col-span-2 grid grid-cols-2 sm:block gap-2">
               <div>
-                <label for="itemQty" class="block text-xs font-medium text-slate-400 mb-1">Jumlah</label>
-                <input id="itemQty" type="number" step="any" min="0.1" value="1" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                <label for="itemQty" class="block text-xs font-semibold text-slate-400 mb-1">Jumlah</label>
+                <input id="itemQty" type="number" step="any" min="0.1" value="1" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm font-mono-receipt text-white focus:outline-none focus:border-emerald-500">
               </div>
               <div class="sm:hidden">
-                <label for="itemUnitMobile" class="block text-xs font-medium text-slate-400 mb-1">Satuan</label>
+                <label for="itemUnitMobile" class="block text-xs font-semibold text-slate-400 mb-1">Satuan</label>
                 <select id="itemUnitMobile" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
                   <option value="sak">sak</option>
                   <option value="lsn">lsn</option>
@@ -166,12 +324,14 @@
                   <option value="pcs">pcs</option>
                   <option value="btl">btl</option>
                   <option value="rtg">rtg</option>
+                  <option value="krg">krg</option>
+                  <option value="ikat">ikat</option>
                 </select>
               </div>
             </div>
 
             <div class="hidden sm:block sm:col-span-2">
-              <label for="itemUnit" class="block text-xs font-medium text-slate-400 mb-1">Satuan</label>
+              <label for="itemUnit" class="block text-xs font-semibold text-slate-400 mb-1">Satuan</label>
               <select id="itemUnit" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
                 <option value="sak">sak</option>
                 <option value="lsn">lsn</option>
@@ -183,25 +343,28 @@
                 <option value="pcs">pcs</option>
                 <option value="btl">btl</option>
                 <option value="rtg">rtg</option>
+                <option value="krg">krg</option>
+                <option value="ikat">ikat</option>
               </select>
             </div>
 
             <div class="sm:col-span-3">
-              <label id="priceInputLabel" for="itemPrice" class="block text-xs font-medium text-slate-400 mb-1">Harga Baris (Rp)</label>
-              <input id="itemPrice" type="number" step="100" min="0" required placeholder="258000" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+              <label id="priceInputLabel" for="itemPrice" class="block text-xs font-semibold text-slate-400 mb-1">Harga Baris (Rp)</label>
+              <input id="itemPrice" type="number" step="100" min="0" required placeholder="258000" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-mono-receipt text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
             </div>
 
-            <div class="sm:col-span-12 flex flex-wrap items-center justify-between gap-2 pt-1">
+            <div class="sm:col-span-12 flex flex-wrap items-center justify-between gap-2 pt-2">
               <!-- Quick Presets -->
               <div class="flex flex-wrap items-center gap-1.5">
-                <span class="text-[11px] text-slate-400 mr-1">Kilat:</span>
-                <button type="button" data-quick-name="Gula Pasir" data-quick-qty="1" data-quick-unit="sak" data-quick-price="850000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded-lg transition-colors">+ Gula 1 sak</button>
-                <button type="button" data-quick-name="Minyak Goreng" data-quick-qty="1" data-quick-unit="dus" data-quick-price="210000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded-lg transition-colors">+ Minyak 1 dus</button>
-                <button type="button" data-quick-name="Indomie Grg" data-quick-qty="2" data-quick-unit="dus" data-quick-price="232000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded-lg transition-colors">+ Indomie 2 dus</button>
-                <button type="button" data-quick-name="Telur Ayam" data-quick-qty="10" data-quick-unit="kg" data-quick-price="280000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded-lg transition-colors">+ Telur 10 kg</button>
+                <span class="text-[11px] font-semibold text-slate-400 mr-1">⚡ Barang Cepat:</span>
+                <button type="button" data-quick-name="Gula Pasir" data-quick-qty="1" data-quick-unit="sak" data-quick-price="850000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:border-emerald-500/40 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-lg transition-all">+ Gula 1 sak</button>
+                <button type="button" data-quick-name="Minyak Goreng" data-quick-qty="1" data-quick-unit="dus" data-quick-price="210000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:border-emerald-500/40 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-lg transition-all">+ Minyak 1 dus</button>
+                <button type="button" data-quick-name="Indomie Grg" data-quick-qty="2" data-quick-unit="dus" data-quick-price="232000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:border-emerald-500/40 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-lg transition-all">+ Indomie 2 dus</button>
+                <button type="button" data-quick-name="Telur Ayam" data-quick-qty="10" data-quick-unit="kg" data-quick-price="280000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:border-emerald-500/40 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-lg transition-all">+ Telur 10 kg</button>
+                <button type="button" data-quick-name="Beras Ramos" data-quick-qty="1" data-quick-unit="sak" data-quick-price="720000" class="quick-item-btn text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:border-emerald-500/40 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-lg transition-all">+ Beras 1 sak</button>
               </div>
 
-              <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20">
+              <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/25">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
                 </svg>
@@ -212,13 +375,13 @@
         </section>
 
         <!-- Item List Table & Payment Details -->
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
+        <section class="app-card bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
           <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">3. Daftar Barang (<span id="itemCountBadge">8</span> Item)</h2>
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></span>
+              <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">3. Daftar Barang (<span id="itemCountBadge">8</span> Item)</h2>
             </div>
-            <button id="btnClearItems" type="button" class="text-xs text-rose-400 hover:text-rose-300 font-medium flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-rose-500/10 transition-colors">
+            <button id="btnClearItems" type="button" class="text-xs text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-rose-500/10 transition-colors">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
               </svg>
@@ -229,7 +392,7 @@
           <div class="overflow-x-auto border border-slate-800 rounded-xl mb-4">
             <table class="w-full text-left border-collapse">
               <thead>
-                <tr class="bg-slate-800/80 text-[11px] font-semibold uppercase tracking-wider text-slate-400 border-b border-slate-700/80">
+                <tr class="bg-slate-800/80 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-700/80">
                   <th class="py-2.5 px-3 w-10">No</th>
                   <th class="py-2.5 px-3">Nama Barang</th>
                   <th class="py-2.5 px-3 w-28">Qty & Satuan</th>
@@ -246,26 +409,26 @@
           <!-- Extra Payment Controls (Discount, Ongkir, Status, Payment Method) -->
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
             <div>
-              <label for="discountInput" class="block text-xs font-medium text-slate-400 mb-1">Potongan / Diskon (Rp)</label>
-              <input id="discountInput" type="number" min="0" step="500" value="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+              <label for="discountInput" class="block text-xs font-semibold text-slate-400 mb-1">Potongan / Diskon (Rp)</label>
+              <input id="discountInput" type="number" min="0" step="500" value="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm font-mono-receipt text-white focus:outline-none focus:border-emerald-500">
             </div>
             <div>
-              <label for="shippingInput" class="block text-xs font-medium text-slate-400 mb-1">Ongkir / Biaya Lain (Rp)</label>
-              <input id="shippingInput" type="number" min="0" step="500" value="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+              <label for="shippingInput" class="block text-xs font-semibold text-slate-400 mb-1">Ongkir / Biaya Lain (Rp)</label>
+              <input id="shippingInput" type="number" min="0" step="500" value="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm font-mono-receipt text-white focus:outline-none focus:border-emerald-500">
             </div>
             <div>
-              <label for="paymentStatus" class="block text-xs font-medium text-slate-400 mb-1">Status Pembayaran</label>
-              <select id="paymentStatus" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+              <label for="paymentStatus" class="block text-xs font-semibold text-slate-400 mb-1">Status Pembayaran</label>
+              <select id="paymentStatus" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm font-semibold text-white focus:outline-none focus:border-emerald-500">
                 <option value="LUNAS">LUNAS</option>
                 <option value="BELUM LUNAS">BELUM LUNAS (Bon)</option>
                 <option value="DP / CICIL">DP / CICILAN</option>
               </select>
             </div>
             <div>
-              <label for="paymentMethod" class="block text-xs font-medium text-slate-400 mb-1">Metode Bayar</label>
+              <label for="paymentMethod" class="block text-xs font-semibold text-slate-400 mb-1">Metode Bayar</label>
               <select id="paymentMethod" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
                 <option value="Tunai">Tunai (Cash)</option>
-                <option value="Transfer BCA">Transfer Bank</option>
+                <option value="Transfer Bank">Transfer Bank</option>
                 <option value="QRIS">QRIS / E-Wallet</option>
                 <option value="Tempo">Jatuh Tempo</option>
               </select>
@@ -273,25 +436,28 @@
           </div>
 
           <div class="mt-3">
-            <label for="receiptNote" class="block text-xs font-medium text-slate-400 mb-1">Catatan Kaki / Info Rekening (Opsional)</label>
-            <input id="receiptNote" type="text" value="Terima kasih atas belanjaan Anda. Barang yang sudah dibeli tidak dapat ditukar." placeholder="Contoh: Transfer BCA 1234567890 a/n Toko Makmur" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+            <label for="receiptNote" class="block text-xs font-semibold text-slate-400 mb-1">Catatan Kaki / Info Rekening (Opsional)</label>
+            <input id="receiptNote" type="text" value="Terima kasih atas belanjaan Anda. Barang yang sudah dibeli tidak dapat ditukar." placeholder="Contoh: Transfer BRI 1234-5678-90 a/n Toko Grosir Naila" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
           </div>
         </section>
       </div>
 
       <!-- Right Column: Live Receipt Previews & Share to WA (5 cols) -->
-      <div class="lg:col-span-5 lg:sticky lg:top-20 flex flex-col gap-4">
+      <div id="previewSectionAnchor" class="lg:col-span-5 lg:sticky lg:top-20 flex flex-col gap-4">
 
         <!-- Preview Format Selector Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+        <div class="app-card bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
           <div class="flex items-center justify-between mb-3">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">Pratinjau & Kirim Nota</h2>
-            <span class="text-[11px] text-emerald-400 font-medium">Siap Kirim WA</span>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">Pratinjau & Kirim Nota</h2>
+            </div>
+            <span class="text-[11px] text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">Siap Kirim WA</span>
           </div>
 
           <!-- 3 Mode Tabs -->
-          <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800 mb-4">
-            <button id="tabMonospace" type="button" class="py-2 px-2 rounded-lg text-xs font-semibold transition-all bg-emerald-600 text-white shadow">
+          <div class="grid grid-cols-3 gap-1.5 bg-slate-950/90 p-1.5 rounded-xl border border-slate-800 mb-4">
+            <button id="tabMonospace" type="button" class="py-2 px-2 rounded-lg text-xs font-bold transition-all bg-emerald-600 text-white shadow keep-white-text">
               1. Kolom Ringkas
             </button>
             <button id="tabDigitalCard" type="button" class="py-2 px-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white">
@@ -303,9 +469,9 @@
           </div>
 
           <!-- Monospace Options Bar (Shown only on Tab 1) -->
-          <div id="monospaceOptions" class="flex flex-wrap items-center justify-between gap-2 mb-3 px-3 py-2 rounded-xl bg-slate-800/60 border border-slate-700/70 text-xs">
+          <div id="monospaceOptions" class="flex flex-wrap items-center justify-between gap-2 mb-3 px-3 py-2.5 rounded-xl bg-slate-800/60 border border-slate-700/70 text-xs">
             <label class="inline-flex items-center gap-2 cursor-pointer text-slate-300">
-              <input id="chkIncludeStoreHeader" type="checkbox" class="rounded bg-slate-900 border-slate-600 text-emerald-500 focus:ring-0">
+              <input id="chkIncludeStoreHeader" type="checkbox" checked class="rounded bg-slate-900 border-slate-600 text-emerald-500 focus:ring-0">
               <span>Sertakan Nama Toko & Tanggal</span>
             </label>
             <label class="inline-flex items-center gap-2 cursor-pointer text-slate-300">
@@ -318,20 +484,20 @@
           <div id="panelMonospace" class="block">
             <div class="mb-2 flex items-center justify-between text-[11px] text-slate-400">
               <span>Pas selebar layar WhatsApp (32 karakter sejajar)</span>
-              <span id="charWidthIndicator" class="font-mono-receipt text-emerald-400">Lebar: 32 kol</span>
+              <span id="charWidthIndicator" class="font-mono-receipt text-emerald-400 font-semibold">Lebar: 32 kol</span>
             </div>
 
             <!-- Dark Rounded Card Matching the User's Uploaded Image -->
-            <div class="bg-[#18181b] border border-zinc-800 rounded-3xl p-5 sm:p-6 shadow-2xl overflow-x-auto">
-              <pre id="monospacePreviewText" class="font-mono-receipt text-[13px] sm:text-[14px] leading-[1.65] text-zinc-100 whitespace-pre select-all m-0"></pre>
+            <div class="bg-[#141619] border border-zinc-800 rounded-3xl p-5 sm:p-6 shadow-2xl overflow-x-auto keep-white-text">
+              <pre id="monospacePreviewText" class="font-mono-receipt text-[13px] sm:text-[13.5px] leading-[1.68] text-zinc-100 whitespace-pre select-all m-0"></pre>
             </div>
           </div>
 
           <!-- PREVIEW PANEL 2: MODERN DIGITAL RECEIPT CARD (WITH PNG DOWNLOAD) -->
           <div id="panelDigitalCard" class="hidden">
             <div class="mb-2 flex items-center justify-between text-[11px] text-slate-400">
-              <span>Tampilan Struk Digital Modern (Bisa Unduh Gambar PNG)</span>
-              <button id="btnDownloadPng" type="button" class="text-emerald-400 hover:text-emerald-300 font-semibold underline flex items-center gap-1">
+              <span>Tampilan Struk Digital Modern (Siap Unduh PNG)</span>
+              <button id="btnDownloadPng" type="button" class="text-emerald-400 hover:text-emerald-300 font-bold underline flex items-center gap-1">
                 <span>Unduh Gambar (PNG)</span>
               </button>
             </div>
@@ -339,25 +505,26 @@
             <!-- Visual Digital Receipt Card -->
             <div id="digitalCardContainer" class="bg-white text-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
               <!-- Receipt Top Header -->
-              <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-5">
+              <div class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 text-white p-5 keep-white-text">
                 <div class="flex items-start justify-between gap-2">
                   <div>
-                    <p class="text-[10px] uppercase tracking-widest text-emerald-100 font-semibold">STRUK BELANJA DIGITAL</p>
-                    <h3 id="cardStoreName" class="text-lg font-extrabold tracking-tight mt-0.5">TOKO GROSIR MAKMUR</h3>
-                    <p id="cardStoreContact" class="text-xs text-emerald-100/90">Pasar Sentral Blok A No. 12</p>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-100 font-bold">STRUK BELANJA DIGITAL</p>
+                    <h3 id="cardStoreName" class="text-lg font-extrabold tracking-tight mt-0.5">TOKO GROSIR NAILA</h3>
+                    <p id="cardStoreContact" class="text-xs text-emerald-100/90">Durian Luncuk Simpang Masjid</p>
                   </div>
-                  <span id="cardStatusBadge" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-white text-emerald-700 shadow">
+                  <span id="cardStatusBadge" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-white text-emerald-800 shadow">
                     LUNAS
                   </span>
                 </div>
                 <div class="mt-4 pt-3 border-t border-white/15 flex flex-wrap items-center justify-between gap-2 text-xs text-emerald-50">
                   <div>
                     <span class="opacity-75">Pelanggan:</span>
-                    <strong id="cardCustomerName" class="ml-1">Warung Bu Siti</strong>
+                    <strong id="cardCustomerName" class="ml-1">Umum</strong>
                   </div>
                   <div id="cardDateText" class="font-mono-receipt text-[11px]">31 Okt 2026</div>
                 </div>
               </div>
+              <div class="receipt-zig-zag"></div>
 
               <!-- Receipt Items Body -->
               <div class="p-5">
@@ -389,6 +556,14 @@
                     <span>TOTAL BELANJA:</span>
                     <span id="cardGrandTotal" class="font-mono-receipt text-emerald-700 text-base sm:text-lg">Rp1.757.000</span>
                   </div>
+                  <div id="cardCashRow" class="hidden items-center justify-between text-xs text-slate-600 pt-1">
+                    <span>Tunai Diterima:</span>
+                    <span id="cardCashVal" class="font-mono-receipt font-semibold">Rp0</span>
+                  </div>
+                  <div id="cardChangeRow" class="hidden items-center justify-between text-xs text-emerald-700">
+                    <span>Kembalian:</span>
+                    <span id="cardChangeVal" class="font-mono-receipt font-bold">Rp0</span>
+                  </div>
                   <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1">
                     <span>Metode Pembayaran:</span>
                     <span id="cardMethodVal" class="font-semibold text-slate-700">Tunai</span>
@@ -407,19 +582,19 @@
           <div id="panelModernWa" class="hidden">
             <div class="mb-2 flex items-center justify-between text-[11px] text-slate-400">
               <span>Format Chat WhatsApp Modern (Daftar Rapi & Emoji)</span>
-              <span class="text-emerald-400">Cocok untuk WA Bisnis</span>
+              <span class="text-emerald-400 font-semibold">Cocok untuk WA Bisnis</span>
             </div>
-            <div class="bg-[#0b141a] border border-slate-800 rounded-2xl p-4 shadow-inner">
+            <div class="bg-[#0b141a] border border-slate-800 rounded-2xl p-4 shadow-inner keep-white-text">
               <div class="bg-[#005c4b] text-zinc-100 rounded-2xl rounded-tr-none p-4 shadow-md max-w-full overflow-x-auto">
                 <pre id="modernWaPreviewText" class="font-sans text-xs sm:text-sm leading-relaxed whitespace-pre-wrap select-all m-0"></pre>
-                <div class="text-[10px] text-emerald-200/70 text-right mt-2">13:45 ✓✓</div>
+                <div class="text-[10px] text-emerald-200/70 text-right mt-2">15:35 ✓✓</div>
               </div>
             </div>
           </div>
 
           <!-- Primary Action Buttons -->
           <div class="mt-5 flex flex-col gap-2.5">
-            <button id="btnSendWa" type="button" class="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-extrabold text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20">
+            <button id="btnSendWa" type="button" class="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-extrabold text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/25">
               <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.625.846 5.059 2.284 7.033l-1.492 5.448 5.601-1.469c1.906 1.261 4.192 1.988 6.607 1.988 6.627 0 12-5.373 12-12s-5.373-12-12-12z"/>
               </svg>
@@ -455,13 +630,13 @@
 
     <!-- VIEW 2: SAVED RECEIPT HISTORY -->
     <div id="viewHistory" class="hidden">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+      <div class="app-card bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
           <div>
             <h2 class="text-base font-bold text-white">Riwayat Nota Tersimpan</h2>
-            <p class="text-xs text-slate-400">Daftar nota yang telah Anda simpan. Klik "Muat ke Editor" untuk mengedit atau mengirim ulang ke WhatsApp.</p>
+            <p class="text-xs text-slate-400">Daftar nota yang telah Anda simpan di perangkat ini. Klik "Muat ke Editor" untuk mengedit atau mengirim ulang.</p>
           </div>
-          <button id="btnBackToPos" type="button" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors">
+          <button id="btnBackToPos" type="button" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors keep-white-text">
             ← Kembali ke Pembuat Nota
           </button>
         </div>
@@ -473,6 +648,98 @@
     </div>
 
   </main>
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR (Ergonomic for HP usage) -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-3 py-2 flex items-center justify-around shadow-2xl">
+    <button id="mobNavInput" type="button" class="flex flex-col items-center gap-0.5 text-emerald-400 font-bold text-[11px]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      </svg>
+      <span>Input Kasir</span>
+    </button>
+    <button id="mobNavPreview" type="button" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white font-semibold text-[11px]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      <span>Lihat Struk</span>
+    </button>
+    <button id="mobNavWa" type="button" class="flex flex-col items-center gap-0.5 text-[#25D366] font-bold text-[11px]">
+      <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/>
+      </svg>
+      <span>Kirim WA</span>
+    </button>
+    <button id="mobNavInstall" type="button" class="flex flex-col items-center gap-0.5 text-sky-400 font-bold text-[11px]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+      </svg>
+      <span>Unduh APK</span>
+    </button>
+  </nav>
+
+  <!-- MODAL: DOWNLOAD & INSTALL APK WEB DI HP -->
+  <div id="installModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative">
+      <div class="flex items-start justify-between gap-3 mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white shadow-lg keep-white-text">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-extrabold text-white">Pasang & Download APK Web di HP</h3>
+            <p class="text-xs text-slate-400">Gunakan Nota Toko Naila layaknya aplikasi HP mandiri</p>
+          </div>
+        </div>
+        <button id="btnCloseInstallModal" type="button" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-3.5 text-xs sm:text-sm text-slate-300">
+        <!-- Option 1: Direct Standalone File Download -->
+        <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
+          <div class="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+            <span>1. Unduh File Aplikasi Mandiri (.HTML) ke HP</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            Simpan file aplikasi ini langsung ke memori HP Anda. Setelah terunduh, klik file <strong>Nota-Toko-Naila.html</strong> untuk membukanya kapan saja di Chrome/Browser HP tanpa takut hilang.
+          </p>
+          <button id="btnDownloadStandaloneHtml" type="button" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Download File Aplikasi ke HP Sekarang</span>
+          </button>
+        </div>
+
+        <!-- Option 2: Direct PWA Install Prompt (if supported by mobile browser) -->
+        <div id="pwaInstallBanner" class="hidden p-4 rounded-2xl bg-sky-500/10 border border-sky-500/30">
+          <div class="font-bold text-sky-400 mb-1">2. Pasang Otomatis ke Layar Utama (PWA)</div>
+          <p class="text-xs text-slate-300 mb-2.5">Browser HP Anda mendukung instalasi langsung ke layar utama:</p>
+          <button id="btnTriggerPwaInstall" type="button" class="w-full py-2.5 px-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition-all">
+            📲 Install Aplikasi Nota Naila
+          </button>
+        </div>
+
+        <!-- Option 3: Step-by-step Add to Home Screen -->
+        <div class="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+          <div class="font-bold text-white">Cara Munculkan Ikon Aplikasi di Layar Utama HP:</div>
+          <ul class="text-xs text-slate-300 space-y-1.5 list-disc pl-4">
+            <li><strong>HP Android (Chrome):</strong> Buka file yang sudah diunduh di atas pada aplikasi Chrome → ketuk ikon <strong>Titik Tiga (⋮)</strong> di pojok kanan atas → pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen)</strong>.</li>
+            <li><strong>iPhone / iPad (Safari):</strong> Ketuk tombol <strong>Bagikan (Share ↑)</strong> di bagian bawah → pilih <strong>"Tambah ke Layar Utama" (Add to Home Screen)</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-5 flex justify-end">
+        <button id="btnDoneInstallModal" type="button" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold border border-slate-700">
+          Mengerti & Tutup
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Hidden Canvas for Generating High-Res Receipt PNG -->
   <canvas id="receiptExportCanvas" class="hidden"></canvas>
@@ -495,11 +762,69 @@
       items: JSON.parse(JSON.stringify(INITIAL_SAMPLE_ITEMS)),
       priceInputMode: 'total', // 'total' (input is row total) or 'unit' (input is unit price * qty)
       activePreviewTab: 'monospace', // 'monospace' | 'digital' | 'modernWa'
-      includeStoreHeader: false,
+      includeStoreHeader: true,
       wrapBackticks: true,
+      theme: 'dark',
       invoiceNo: 'INV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-01',
       history: []
     };
+
+    let deferredPwaPrompt = null;
+
+    // Setup Dynamic PWA Manifest & Service Worker for Mobile Installation
+    function initPwaSupport() {
+      try {
+        const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#059669"/><path d="M160 128h192a32 32 0 0132 32v224a32 32 0 01-32 32H160a32 32 0 01-32-32V160a32 32 0 0132-32z" fill="#ffffff" fill-opacity="0.15"/><path d="M192 208h128M192 272h128M192 336h80" stroke="#ffffff" stroke-width="32" stroke-linecap="round"/></svg>`;
+        const iconDataUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(iconSvg);
+
+        const manifestObj = {
+          name: 'Nota Toko Naila — Kasir & Struk WA',
+          short_name: 'Nota Naila',
+          description: 'Aplikasi Kasir Digital & Generator Struk WhatsApp Toko Grosir Naila',
+          start_url: './',
+          display: 'standalone',
+          background_color: '#0b1120',
+          theme_color: '#059669',
+          icons: [
+            { src: iconDataUrl, sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
+            { src: iconDataUrl, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+          ]
+        };
+
+        const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        const manifestLink = document.getElementById('pwaManifestLink');
+        if (manifestLink) manifestLink.setAttribute('href', manifestUrl);
+      } catch (e) {
+        // Ignore in restricted environments
+      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+        const banner = document.getElementById('pwaInstallBanner');
+        if (banner) banner.classList.remove('hidden');
+      });
+    }
+
+    // Download Complete Self-Contained HTML File to Phone
+    function downloadStandaloneHtmlApp() {
+      try {
+        const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Nota-Toko-Naila-App.html';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+        showToast('File Aplikasi Nota-Toko-Naila-App.html berhasil diunduh ke HP!');
+      } catch (e) {
+        showToast('Gagal mengunduh file aplikasi.', 'warn');
+      }
+    }
 
     // Safe LocalStorage Helper
     function loadSavedState() {
@@ -507,6 +832,11 @@
         const savedHistory = localStorage.getItem('notaku_history_v1');
         if (savedHistory) {
           state.history = JSON.parse(savedHistory);
+        }
+        const savedTheme = localStorage.getItem('notaku_theme_v1');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          state.theme = savedTheme;
+          applyTheme();
         }
       } catch (e) {
         state.history = [];
@@ -521,6 +851,23 @@
       }
     }
 
+    function applyTheme() {
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (state.theme === 'light') {
+        document.body.classList.add('theme-light');
+        if (icon) icon.textContent = '☀️';
+        if (label) label.textContent = 'Mode Terang';
+      } else {
+        document.body.classList.remove('theme-light');
+        if (icon) icon.textContent = '🌙';
+        if (label) label.textContent = 'Mode Gelap';
+      }
+      try {
+        localStorage.setItem('notaku_theme_v1', state.theme);
+      } catch (e) {}
+    }
+
     // Format Number to Indonesian dot notation (e.g., 258.000)
     function formatRibuan(num) {
       const n = Math.round(Number(num) || 0);
@@ -532,7 +879,7 @@
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       const bgClass = type === 'success' ? 'bg-emerald-600 border-emerald-400' : 'bg-amber-600 border-amber-400';
-      toast.className = `${bgClass} text-white px-4 py-2.5 rounded-xl shadow-xl border text-xs font-semibold flex items-center gap-2 transition-all duration-300`;
+      toast.className = `${bgClass} text-white keep-white-text px-4 py-2.5 rounded-xl shadow-xl border text-xs font-bold flex items-center gap-2 transition-all duration-300`;
       toast.innerHTML = `<span>✓</span><span>${message}</span>`;
       container.appendChild(toast);
       setTimeout(() => {
@@ -541,13 +888,15 @@
       }, 2600);
     }
 
-    // Calculate Totals
+    // Calculate Totals & Cash Change
     function calculateTotals() {
       const subtotal = state.items.reduce((acc, item) => acc + (Number(item.price) || 0), 0);
       const discount = Number(document.getElementById('discountInput').value) || 0;
       const shipping = Number(document.getElementById('shippingInput').value) || 0;
       const grandTotal = Math.max(0, subtotal - discount + shipping);
-      return { subtotal, discount, shipping, grandTotal };
+      const cashReceived = Number(document.getElementById('cashReceivedInput').value) || 0;
+      const changeAmount = cashReceived - grandTotal;
+      return { subtotal, discount, shipping, grandTotal, cashReceived, changeAmount };
     }
 
     // Build Exact 32-Character Monospace Text (Matches User's Image)
@@ -560,11 +909,11 @@
       const paymentStatus = document.getElementById('paymentStatus').value;
       const paymentMethod = document.getElementById('paymentMethod').value;
       const receiptNote = (document.getElementById('receiptNote').value || '').trim();
-      const { subtotal, discount, shipping, grandTotal } = calculateTotals();
+      const { subtotal, discount, shipping, grandTotal, cashReceived, changeAmount } = calculateTotals();
 
       let lines = [];
 
-      if (state.includeStoreHeader) {
+      if (state.includeStoreHeader && (!forWhatsApp || !state.wrapBackticks)) {
         lines.push(`*${storeName.toUpperCase()}*`);
         if (storeContact) lines.push(storeContact);
         const dateStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -583,7 +932,6 @@
 
       let monoLines = [];
       monoLines.push(divider);
-      // Header: NO (4) + NAMA BARANG (13) + QTY (7) + HARGA (8) = 32 chars
       monoLines.push('NO  NAMA BARANG    QTY     HARGA');
       monoLines.push(divider);
 
@@ -591,20 +939,14 @@
         monoLines.push('   (Belum ada barang belanja)   ');
       } else {
         state.items.forEach((item, idx) => {
-          // 1) NO column: e.g. "1.  " (3 chars if name is 13 chars, or 4 chars)
           const noRaw = `${idx + 1}.`;
           const nameClean = (item.name || 'Barang').trim();
           const qtyClean = `${item.qty} ${(item.unit || '').trim()}`.trim();
           const priceClean = formatRibuan(item.price);
 
-          // Format to 32 chars total so columns stay strictly aligned:
-          // Col 1 (NO): 4 chars ("1.  ") unless name is 13 chars ("7.  Sampoerna Bsr ")
           const noCol = noRaw.padEnd(4, ' ');
-          // Col 2 (NAMA): 13 chars max + 1 space
           let nameCol = nameClean.length > 13 ? nameClean.slice(0, 13) : nameClean.padEnd(13, ' ');
-          // Col 3 (QTY): 6 chars left-aligned ("1 sak ", "10 kg ")
           let qtyCol = qtyClean.length > 6 ? qtyClean.slice(0, 6) : qtyClean.padEnd(6, ' ');
-          // Col 4 (HARGA): right-aligned to fill remaining up to 32 chars
           const leftPart = `${noCol}${nameCol} ${qtyCol}`;
           const remaining = Math.max(1, LINE_WIDTH - leftPart.length);
           const priceCol = priceClean.padStart(remaining, ' ');
@@ -633,6 +975,15 @@
       const totalLabel = 'TOTAL BELANJA:';
       const totalLine = totalLabel.padEnd(LINE_WIDTH - totalStr.length, ' ') + totalStr;
       monoLines.push(totalLine);
+
+      if (cashReceived > 0) {
+        const cashStr = `Rp${formatRibuan(cashReceived)}`;
+        monoLines.push('TUNAI:'.padEnd(LINE_WIDTH - cashStr.length, ' ') + cashStr);
+        const chgStr = changeAmount >= 0 ? `Rp${formatRibuan(changeAmount)}` : `-Rp${formatRibuan(Math.abs(changeAmount))}`;
+        const chgLabel = changeAmount >= 0 ? 'KEMBALI:' : 'KURANG:';
+        monoLines.push(chgLabel.padEnd(LINE_WIDTH - chgStr.length, ' ') + chgStr);
+      }
+
       monoLines.push(divider);
 
       if (state.includeStoreHeader) {
@@ -661,14 +1012,14 @@
 
     // Build Modern WhatsApp Chat Format
     function generateModernWaReceipt() {
-      const storeName = (document.getElementById('storeName').value || 'TOKO GROSIR MAKMUR').trim();
+      const storeName = (document.getElementById('storeName').value || 'TOKO GROSIR NAILA').trim();
       const storeContact = (document.getElementById('storeContact').value || '').trim();
       const customerName = (document.getElementById('customerName').value || 'Pelanggan').trim();
       const paymentStatus = document.getElementById('paymentStatus').value;
       const paymentMethod = document.getElementById('paymentMethod').value;
       const receiptNote = (document.getElementById('receiptNote').value || '').trim();
       const dateStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-      const { subtotal, discount, shipping, grandTotal } = calculateTotals();
+      const { subtotal, discount, shipping, grandTotal, cashReceived, changeAmount } = calculateTotals();
 
       let out = [];
       out.push(`🧾 *NOTA BELANJA DIGITAL*`);
@@ -696,6 +1047,10 @@
         if (shipping > 0) out.push(`Ongkir   : +Rp${formatRibuan(shipping)}`);
       }
       out.push(`💰 *TOTAL BELANJA : Rp${formatRibuan(grandTotal)}*`);
+      if (cashReceived > 0) {
+        out.push(`💵 Tunai : Rp${formatRibuan(cashReceived)}`);
+        out.push(`🔄 ${changeAmount >= 0 ? 'Kembalian' : 'Kurang Bayar'} : Rp${formatRibuan(Math.abs(changeAmount))}`);
+      }
       out.push(`━━━━━━━━━━━━━━━━━━━━`);
       if (receiptNote) {
         out.push(`_${receiptNote}_`);
@@ -703,18 +1058,51 @@
       return out.join('\n');
     }
 
+    // Update Top Digital Register Bar & Cash Change
+    function updateDigitalRegisterDisplay() {
+      const { subtotal, discount, shipping, grandTotal, cashReceived, changeAmount } = calculateTotals();
+      document.getElementById('topDigitalGrandTotal').textContent = 'Rp' + formatRibuan(grandTotal);
+      document.getElementById('topItemCount').textContent = state.items.length;
+      document.getElementById('topDigitalSubtotal').textContent = 'Rp' + formatRibuan(subtotal);
+      document.getElementById('topDigitalAdjustments').textContent = `Diskon Rp${formatRibuan(discount)} • Ongkir Rp${formatRibuan(shipping)}`;
+
+      const changeLabel = document.getElementById('changeLabel');
+      const changeAmountDisplay = document.getElementById('changeAmountDisplay');
+      const changeStatusHint = document.getElementById('changeStatusHint');
+
+      if (cashReceived <= 0) {
+        changeLabel.textContent = 'Kembalian / Sisa';
+        changeAmountDisplay.textContent = 'Rp0';
+        changeAmountDisplay.className = 'text-base sm:text-lg font-extrabold font-mono-receipt text-emerald-400 mt-0.5';
+        changeStatusHint.textContent = 'Masukkan uang diterima';
+      } else if (changeAmount >= 0) {
+        changeLabel.textContent = 'Uang Kembalian';
+        changeAmountDisplay.textContent = 'Rp' + formatRibuan(changeAmount);
+        changeAmountDisplay.className = 'text-base sm:text-lg font-extrabold font-mono-receipt text-emerald-400 mt-0.5';
+        changeStatusHint.textContent = changeAmount === 0 ? 'Uang Pas ✓' : 'Siap dikembalikan ke pembeli';
+      } else {
+        changeLabel.textContent = 'Kurang Bayar (Bon)';
+        changeAmountDisplay.textContent = '-Rp' + formatRibuan(Math.abs(changeAmount));
+        changeAmountDisplay.className = 'text-base sm:text-lg font-extrabold font-mono-receipt text-amber-400 mt-0.5';
+        changeStatusHint.textContent = 'Nominal masih kurang';
+      }
+    }
+
     // Render All Views & Previews
     function renderAll() {
+      updateDigitalRegisterDisplay();
+
       // 1. Render Items Table
       const tbody = document.getElementById('itemsTableBody');
       document.getElementById('itemCountBadge').textContent = state.items.length;
       document.getElementById('historyBadge').textContent = state.history.length;
+      document.getElementById('invoiceNoDisplay').textContent = '#' + state.invoiceNo;
 
       if (state.items.length === 0) {
         tbody.innerHTML = `
           <tr>
             <td colspan="5" class="py-8 text-center text-slate-500 text-xs">
-              Belum ada barang di dalam nota. Silakan tambahkan barang di atas atau klik "Reset Contoh Gambar".
+              Belum ada barang di dalam nota. Silakan tambahkan barang di atas atau klik "Reset Contoh".
             </td>
           </tr>
         `;
@@ -724,19 +1112,19 @@
             <td class="py-2.5 px-3 font-mono-receipt text-xs text-slate-400">${idx + 1}.</td>
             <td class="py-2.5 px-3">
               <input type="text" data-edit-id="${item.id}" data-edit-field="name" value="${item.name.replace(/"/g, '&quot;')}"
-                class="w-full bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-2 py-1 text-sm font-medium text-white focus:outline-none">
+                class="w-full bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-2 py-1 text-sm font-semibold text-white focus:outline-none">
             </td>
             <td class="py-2.5 px-3">
               <div class="flex items-center gap-1">
                 <input type="number" step="any" min="0.1" data-edit-id="${item.id}" data-edit-field="qty" value="${item.qty}"
-                  class="w-14 bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-1.5 py-1 text-xs font-mono-receipt text-emerald-300 focus:outline-none">
+                  class="w-14 bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-1.5 py-1 text-xs font-mono-receipt font-bold text-emerald-400 focus:outline-none">
                 <input type="text" data-edit-id="${item.id}" data-edit-field="unit" value="${item.unit}"
                   class="w-12 bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-1.5 py-1 text-xs text-slate-300 focus:outline-none">
               </div>
             </td>
             <td class="py-2.5 px-3 text-right">
               <input type="number" step="100" min="0" data-edit-id="${item.id}" data-edit-field="price" value="${item.price}"
-                class="w-28 text-right bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-2 py-1 text-sm font-mono-receipt font-semibold text-white focus:outline-none">
+                class="w-28 text-right bg-transparent border border-transparent hover:border-slate-700 focus:border-emerald-500 focus:bg-slate-800 rounded-lg px-2 py-1 text-sm font-mono-receipt font-bold text-white focus:outline-none">
             </td>
             <td class="py-2.5 px-3 text-center">
               <div class="flex items-center justify-center gap-1">
@@ -752,13 +1140,13 @@
       document.getElementById('monospacePreviewText').textContent = generateMonospaceReceipt(false);
 
       // 3. Render Modern Digital Card Preview
-      const storeName = (document.getElementById('storeName').value || 'TOKO GROSIR MAKMUR').trim();
+      const storeName = (document.getElementById('storeName').value || 'TOKO GROSIR NAILA').trim();
       const storeContact = (document.getElementById('storeContact').value || '-').trim();
       const customerName = (document.getElementById('customerName').value || 'Umum').trim();
       const paymentStatus = document.getElementById('paymentStatus').value;
       const paymentMethod = document.getElementById('paymentMethod').value;
       const receiptNote = (document.getElementById('receiptNote').value || '').trim();
-      const { subtotal, discount, shipping, grandTotal } = calculateTotals();
+      const { subtotal, discount, shipping, grandTotal, cashReceived, changeAmount } = calculateTotals();
 
       document.getElementById('cardStoreName').textContent = storeName;
       document.getElementById('cardStoreContact').textContent = storeContact;
@@ -792,6 +1180,8 @@
       const subRow = document.getElementById('cardSubtotalRow');
       const discRow = document.getElementById('cardDiscountRow');
       const shipRow = document.getElementById('cardShippingRow');
+      const cashRow = document.getElementById('cardCashRow');
+      const changeRow = document.getElementById('cardChangeRow');
 
       if (discount > 0 || shipping > 0) {
         subRow.className = 'flex justify-between text-slate-500';
@@ -812,6 +1202,16 @@
         document.getElementById('cardShippingVal').textContent = '+Rp' + formatRibuan(shipping);
       } else {
         shipRow.className = 'hidden justify-between text-slate-600';
+      }
+
+      if (cashReceived > 0) {
+        cashRow.className = 'flex items-center justify-between text-xs text-slate-600 pt-1';
+        changeRow.className = 'flex items-center justify-between text-xs text-emerald-700';
+        document.getElementById('cardCashVal').textContent = 'Rp' + formatRibuan(cashReceived);
+        document.getElementById('cardChangeVal').textContent = (changeAmount >= 0 ? 'Rp' : '-Rp') + formatRibuan(Math.abs(changeAmount));
+      } else {
+        cashRow.className = 'hidden items-center justify-between text-xs text-slate-600 pt-1';
+        changeRow.className = 'hidden items-center justify-between text-xs text-emerald-700';
       }
 
       document.getElementById('cardGrandTotal').textContent = 'Rp' + formatRibuan(grandTotal);
@@ -845,7 +1245,7 @@
             <p class="text-xs text-slate-400 mt-0.5">${entry.items.length} jenis barang • Total <strong class="text-emerald-400 font-mono-receipt">Rp${formatRibuan(entry.grandTotal)}</strong></p>
           </div>
           <div class="flex items-center gap-2 pt-2 border-t border-slate-700/60">
-            <button type="button" data-load-history="${entry.id}" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors">
+            <button type="button" data-load-history="${entry.id}" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors keep-white-text">
               Muat ke Editor
             </button>
             <button type="button" data-delete-history="${entry.id}" class="py-2 px-3 rounded-xl bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white text-xs font-semibold transition-colors">
@@ -860,19 +1260,19 @@
     function downloadReceiptAsPng() {
       const canvas = document.getElementById('receiptExportCanvas');
       const ctx = canvas.getContext('2d');
-      const storeName = (document.getElementById('storeName').value || 'TOKO GROSIR MAKMUR').trim();
+      const storeName = (document.getElementById('storeName').value || 'TOKO GROSIR NAILA').trim();
       const storeContact = (document.getElementById('storeContact').value || '').trim();
       const customerName = (document.getElementById('customerName').value || 'Umum').trim();
       const paymentStatus = document.getElementById('paymentStatus').value;
       const paymentMethod = document.getElementById('paymentMethod').value;
       const receiptNote = (document.getElementById('receiptNote').value || 'Terima kasih atas belanjaan Anda.').trim();
-      const { subtotal, discount, shipping, grandTotal } = calculateTotals();
+      const { subtotal, discount, shipping, grandTotal, cashReceived, changeAmount } = calculateTotals();
 
       const scale = 2;
       const width = 460;
       const rowHeight = 34;
-      const extraRows = (discount > 0 ? 1 : 0) + (shipping > 0 ? 1 : 0) + (discount > 0 || shipping > 0 ? 1 : 0);
-      const height = 270 + Math.max(1, state.items.length) * rowHeight + extraRows * 26 + 90;
+      const extraRows = (discount > 0 ? 1 : 0) + (shipping > 0 ? 1 : 0) + (discount > 0 || shipping > 0 ? 1 : 0) + (cashReceived > 0 ? 2 : 0);
+      const height = 280 + Math.max(1, state.items.length) * rowHeight + extraRows * 26 + 90;
 
       canvas.width = width * scale;
       canvas.height = height * scale;
@@ -884,14 +1284,14 @@
 
       // Top Emerald Banner
       ctx.fillStyle = '#059669';
-      ctx.fillRect(0, 0, width, 96);
+      ctx.fillRect(0, 0, width, 98);
 
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.font = 'bold 18px "Plus Jakarta Sans", Inter, sans-serif';
       ctx.fillText(storeName.toUpperCase(), 24, 38);
 
       ctx.fillStyle = '#d1fae5';
-      ctx.font = '12px Inter, sans-serif';
+      ctx.font = '12px "Plus Jakarta Sans", Inter, sans-serif';
       ctx.fillText(storeContact || 'NOTA BELANJA DIGITAL', 24, 58);
 
       const dateStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -907,7 +1307,7 @@
       ctx.textAlign = 'left';
 
       // Monospace Table Header
-      let y = 132;
+      let y = 134;
       ctx.fillStyle = '#a1a1aa';
       ctx.font = 'bold 13px "JetBrains Mono", Courier, monospace';
       ctx.fillText('NO  NAMA BARANG      QTY       HARGA', 24, y);
@@ -973,8 +1373,26 @@
       ctx.textAlign = 'right';
       ctx.fillText('Rp' + formatRibuan(grandTotal), width - 24, y + 16);
       ctx.textAlign = 'left';
+      y += 28;
 
-      y += 38;
+      if (cashReceived > 0) {
+        ctx.fillStyle = '#d4d4d8';
+        ctx.font = '13px "JetBrains Mono", Courier, monospace';
+        ctx.fillText('TUNAI DITERIMA:', 24, y + 12);
+        ctx.textAlign = 'right';
+        ctx.fillText('Rp' + formatRibuan(cashReceived), width - 24, y + 12);
+        ctx.textAlign = 'left';
+        y += 24;
+
+        ctx.fillStyle = '#34d399';
+        ctx.fillText(changeAmount >= 0 ? 'KEMBALIAN:' : 'KURANG BAYAR:', 24, y + 12);
+        ctx.textAlign = 'right';
+        ctx.fillText((changeAmount >= 0 ? 'Rp' : '-Rp') + formatRibuan(Math.abs(changeAmount)), width - 24, y + 12);
+        ctx.textAlign = 'left';
+        y += 24;
+      }
+
+      y += 12;
       ctx.strokeStyle = '#3f3f46';
       ctx.beginPath();
       ctx.moveTo(24, y);
@@ -1063,7 +1481,7 @@
       const panelMod = document.getElementById('panelModernWa');
       const monoOpts = document.getElementById('monospaceOptions');
 
-      const activeClass = 'py-2 px-2 rounded-lg text-xs font-semibold transition-all bg-emerald-600 text-white shadow';
+      const activeClass = 'py-2 px-2 rounded-lg text-xs font-bold transition-all bg-emerald-600 text-white shadow keep-white-text';
       const inactiveClass = 'py-2 px-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white';
 
       tabMono.className = tab === 'monospace' ? activeClass : inactiveClass;
@@ -1074,28 +1492,95 @@
       panelDig.className = tab === 'digital' ? 'block' : 'hidden';
       panelMod.className = tab === 'modernWa' ? 'block' : 'hidden';
       monoOpts.className = tab === 'monospace'
-        ? 'flex flex-wrap items-center justify-between gap-2 mb-3 px-3 py-2 rounded-xl bg-slate-800/60 border border-slate-700/70 text-xs'
+        ? 'flex flex-wrap items-center justify-between gap-2 mb-3 px-3 py-2.5 rounded-xl bg-slate-800/60 border border-slate-700/70 text-xs'
         : 'hidden';
     }
 
     // Initialize Event Listeners
     window.addEventListener('DOMContentLoaded', () => {
+      initPwaSupport();
       loadSavedState();
       renderAll();
+
+      // Theme Toggle
+      document.getElementById('btnToggleTheme').addEventListener('click', () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        applyTheme();
+        showToast(state.theme === 'light' ? 'Mode Terang Nyaman diaktifkan' : 'Mode Gelap Digital diaktifkan');
+      });
+
+      // Generate New Invoice Number
+      document.getElementById('btnNewInvoiceNo').addEventListener('click', () => {
+        const rand = Math.floor(10 + Math.random() * 89);
+        state.invoiceNo = 'INV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + rand;
+        renderAll();
+        showToast('Nomor nota baru dibuat: #' + state.invoiceNo);
+      });
+
+      // Quick Cash Buttons
+      document.querySelectorAll('.quick-cash-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-quick-cash');
+          const { grandTotal } = calculateTotals();
+          const cashInput = document.getElementById('cashReceivedInput');
+          if (val === 'exact') {
+            cashInput.value = grandTotal;
+          } else {
+            const current = Number(cashInput.value) || 0;
+            cashInput.value = current + Number(val);
+          }
+          renderAll();
+        });
+      });
+
+      // Install / Download Modal Handlers
+      const installModal = document.getElementById('installModal');
+      function openInstallModal() {
+        installModal.classList.remove('hidden');
+        installModal.classList.add('flex');
+      }
+      function closeInstallModal() {
+        installModal.classList.add('hidden');
+        installModal.classList.remove('flex');
+      }
+      document.getElementById('btnOpenInstallModal').addEventListener('click', openInstallModal);
+      document.getElementById('mobNavInstall').addEventListener('click', openInstallModal);
+      document.getElementById('btnCloseInstallModal').addEventListener('click', closeInstallModal);
+      document.getElementById('btnDoneInstallModal').addEventListener('click', closeInstallModal);
+      document.getElementById('btnDownloadStandaloneHtml').addEventListener('click', downloadStandaloneHtmlApp);
+
+      document.getElementById('btnTriggerPwaInstall').addEventListener('click', async () => {
+        if (!deferredPwaPrompt) return;
+        deferredPwaPrompt.prompt();
+        await deferredPwaPrompt.userChoice;
+        deferredPwaPrompt = null;
+        document.getElementById('pwaInstallBanner').classList.add('hidden');
+      });
+
+      // Mobile Bottom Nav Helpers
+      document.getElementById('mobNavInput').addEventListener('click', () => {
+        document.getElementById('btnNavPos').click();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      document.getElementById('mobNavPreview').addEventListener('click', () => {
+        document.getElementById('btnNavPos').click();
+        document.getElementById('previewSectionAnchor').scrollIntoView({ behavior: 'smooth' });
+      });
+      document.getElementById('mobNavWa').addEventListener('click', sendToWhatsApp);
 
       // Navigation Tabs (POS vs History)
       document.getElementById('btnNavPos').addEventListener('click', () => {
         document.getElementById('viewPos').className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 items-start';
         document.getElementById('viewHistory').className = 'hidden';
-        document.getElementById('btnNavPos').className = 'px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-emerald-600 text-white shadow-sm';
-        document.getElementById('btnNavHistory').className = 'px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5';
+        document.getElementById('btnNavPos').className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-600 text-white shadow-sm keep-white-text';
+        document.getElementById('btnNavHistory').className = 'px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 border border-slate-700';
       });
 
       document.getElementById('btnNavHistory').addEventListener('click', () => {
         document.getElementById('viewPos').className = 'hidden';
         document.getElementById('viewHistory').className = 'block';
-        document.getElementById('btnNavHistory').className = 'px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-emerald-600 text-white shadow-sm flex items-center gap-1.5';
-        document.getElementById('btnNavPos').className = 'px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700';
+        document.getElementById('btnNavHistory').className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-600 text-white shadow-sm flex items-center gap-1.5 keep-white-text';
+        document.getElementById('btnNavPos').className = 'px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700';
         renderHistoryList();
       });
 
@@ -1108,6 +1593,7 @@
         state.items = JSON.parse(JSON.stringify(INITIAL_SAMPLE_ITEMS));
         document.getElementById('discountInput').value = 0;
         document.getElementById('shippingInput').value = 0;
+        document.getElementById('cashReceivedInput').value = '';
         renderAll();
         showToast('Contoh 8 barang sesuai gambar berhasil dimuat!');
       });
@@ -1115,15 +1601,15 @@
       // Price Mode Switcher (Subtotal vs Harga Satuan)
       document.getElementById('modeTotalBtn').addEventListener('click', () => {
         state.priceInputMode = 'total';
-        document.getElementById('modeTotalBtn').className = 'px-2.5 py-1 rounded-lg font-medium transition-all bg-emerald-600 text-white';
-        document.getElementById('modeUnitBtn').className = 'px-2.5 py-1 rounded-lg font-medium transition-all text-slate-400 hover:text-white';
+        document.getElementById('modeTotalBtn').className = 'px-2.5 py-1 rounded-lg font-semibold transition-all bg-emerald-600 text-white keep-white-text';
+        document.getElementById('modeUnitBtn').className = 'px-2.5 py-1 rounded-lg font-semibold transition-all text-slate-400 hover:text-white';
         document.getElementById('priceInputLabel').textContent = 'Harga Baris (Rp)';
       });
 
       document.getElementById('modeUnitBtn').addEventListener('click', () => {
         state.priceInputMode = 'unit';
-        document.getElementById('modeUnitBtn').className = 'px-2.5 py-1 rounded-lg font-medium transition-all bg-emerald-600 text-white';
-        document.getElementById('modeTotalBtn').className = 'px-2.5 py-1 rounded-lg font-medium transition-all text-slate-400 hover:text-white';
+        document.getElementById('modeUnitBtn').className = 'px-2.5 py-1 rounded-lg font-semibold transition-all bg-emerald-600 text-white keep-white-text';
+        document.getElementById('modeTotalBtn').className = 'px-2.5 py-1 rounded-lg font-semibold transition-all text-slate-400 hover:text-white';
         document.getElementById('priceInputLabel').textContent = 'Harga Satuan (Rp)';
       });
 
@@ -1209,6 +1695,7 @@
         }
 
         // Update previews without losing input focus
+        updateDigitalRegisterDisplay();
         document.getElementById('monospacePreviewText').textContent = generateMonospaceReceipt(false);
         document.getElementById('modernWaPreviewText').textContent = generateModernWaReceipt();
         const { grandTotal } = calculateTotals();
@@ -1241,7 +1728,7 @@
       });
 
       // Live Input Listeners for Store/Customer/Payment Fields
-      ['storeName', 'storeContact', 'customerName', 'customerWa', 'discountInput', 'shippingInput', 'paymentStatus', 'paymentMethod', 'receiptNote'].forEach((id) => {
+      ['storeName', 'storeContact', 'customerName', 'customerWa', 'discountInput', 'shippingInput', 'paymentStatus', 'paymentMethod', 'receiptNote', 'cashReceivedInput'].forEach((id) => {
         document.getElementById(id).addEventListener('input', renderAll);
         document.getElementById(id).addEventListener('change', renderAll);
       });
